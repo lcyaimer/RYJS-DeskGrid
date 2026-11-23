@@ -1,0 +1,49 @@
+{
+  "name": "ryjs-desk-grid",
+  "private": true,
+  "version": "0.2.6",
+  "type": "module",
+  "description": "A lightweight, translucent desktop organizer built with Tauri, Vue 3 and Tailwind CSS.",
+  "license": "MIT",
+  "author": "lcyaimer",
+  "homepage": "https://github.com/lcyaimer/RYJS-DeskGrid",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lcyaimer/RYJS-DeskGrid.git"
+  },
+  "keywords": [
+    "tauri",
+    "vue",
+    "desktop",
+    "organizer",
+    "windows"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build:web": "vue-tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.12.0",
+    "@tauri-apps/plugin-dialog": "^2.8.0",
+    "lucide-vue-next": "^0.468.0",
+    "vue": "^3.5.46"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.12.0",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.0",
+    "tailwindcss": "^3.4.19",
+    "typescript": "~5.9.3",
+    "vite": "^6.4.6",
+    "vue-tsc": "^2.2.12"
+  }
+}

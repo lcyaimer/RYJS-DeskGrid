@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Frontend output
+dist/
+dist-ssr/
+
+# Rust / Tauri output
+src-tauri/target/
+src-tauri/gen/
+
+# Local environment
+.env
+.env.*
+!.env.example
+*.local
+
+# Editors and operating system
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.claude/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local release artifacts
+release/
+
+# Logs and temporary files
+*.log

@@ -1,0 +1,69 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag, for example v0.1.8'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    name: Build Windows installer
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build and publish
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+          releaseName: 'RYJS DeskGrid __VERSION__'
+          releaseBody: |
+            Windows 10/11 x64 安装包。
+
+            - GitHub 下载：本页面 Assets 中的 `*-setup.exe`
+            - 夸克网盘：https://pan.quark.cn/s/ce32a112e8ad?pwd=hRZG （提取码 `hRZG`）
+            - 百度网盘：https://pan.baidu.com/s/1sgmYdf4-mJlKALi9UkUXbw?pwd=4ai5 （提取码 `4ai5`）
+
+            首次安装会按需下载 Microsoft WebView2 Runtime。
+            项目源码：https://github.com/lcyaimer/RYJS-DeskGrid
+          releaseDraft: true
+          prerelease: false
+          args: --bundles nsis
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ryjs-deskgrid-windows-installer
+          path: src-tauri/target/release/bundle/nsis/*.exe
+          if-no-files-found: error
+          retention-days: 14
